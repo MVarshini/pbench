@@ -1725,7 +1725,8 @@ class ToolMeister:
         try:
             with o_file.open("w") as ofp, e_file.open("w") as efp:
                 my_env = os.environ.copy()
-                my_env["pbench_install_dir"] = self.pbench_install_dir
+                my_env["sysinfo_install_dir"] = self.pbench_install_dir
+                my_env["sysinfo_full_hostname"] = self._params.hostname
                 cp = subprocess.run(
                     command,
                     cwd=instance_dir,
@@ -1900,10 +1901,9 @@ def daemon(
         working_dir = tmp_dir
     else:
         working_dir = Path(".")
-    param_key = parsed.key
-    pidfile_name = working_dir / f"{param_key}.pid"
-    d_out = working_dir / f"{param_key}.out"
-    d_err = working_dir / f"{param_key}.err"
+    pidfile_name = working_dir / "tm.pid"
+    d_out = working_dir / "tm.out"
+    d_err = working_dir / "tm.err"
     pfctx = pidfile.PIDFile(pidfile_name)
     with d_out.open("w") as sofp, d_err.open("w") as sefp, DaemonContext(
         stdout=sofp,
@@ -1998,22 +1998,20 @@ def start(prog: Path, parsed: Arguments) -> int:
         )
         return 3
 
+    tmp_dir_str = os.environ.get("pbench_tmp", "/var/tmp")
     try:
         # The temporary directory to use for capturing all tool data.
-        tmp_dir = Path(os.environ["pbench_tmp"]).resolve(strict=True)
-    except KeyError:
-        print(f"{PROG}: Missing pbench_tmp environment variable", file=sys.stderr)
-        return 4
+        tmp_dir = Path(tmp_dir_str).resolve(strict=True)
     except Exception as e:
         print(
-            f"{PROG}: Error working with pbench_tmp environment variable, '{tmp_dir}': {e}",
+            f"{PROG}: Error working with temporary directory, '{tmp_dir_str}': {e}",
             file=sys.stderr,
         )
         return 4
     else:
         if not tmp_dir.is_dir():
             print(
-                f"{PROG}: The pbench_tmp environment variable, '{tmp_dir}', does not resolve to a directory",
+                f"{PROG}: The temporary directory, '{tmp_dir_str}', does not resolve to a directory",
                 file=sys.stderr,
             )
             return 4

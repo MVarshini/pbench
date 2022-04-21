@@ -7,7 +7,7 @@ import socket
 import subprocess
 import sys
 import time
-from typing import Dict, List, NamedTuple, Tuple
+from typing import Dict, List, NamedTuple
 
 from datetime import datetime
 import ifaddr
@@ -245,19 +245,6 @@ def setup_logging(debug, logfile):
     return rootLogger
 
 
-def run_command(args, env=None, name=None, logger=None):
-    """Run the command defined by args and return its output"""
-    try:
-        output = subprocess.check_output(args=args, stderr=subprocess.STDOUT, env=env)
-        if isinstance(output, bytes):
-            output = output.decode("utf-8")
-        return output
-    except subprocess.CalledProcessError as e:
-        message = "%s failed: %s" % (name, e.output)
-        logger.error(message)
-        raise RuntimeError(message)
-
-
 def _log_date():
     """_log_data - helper function to mimick previous bash code behaviors
 
@@ -448,7 +435,7 @@ class TemplateSsh:
             except subprocess.TimeoutExpired:
                 pass
 
-    def wait(self, host: str) -> Tuple[int, str, str]:
+    def wait(self, host: str) -> Return:
         """
         Wait for an asynchronous ssh command to complete, returning the
         completion status, stdout and stderr streams as strings.
