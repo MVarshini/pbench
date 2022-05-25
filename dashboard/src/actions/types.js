@@ -5,3 +5,6 @@ export const CLEAR_TOAST = "CLEAR_TOAST";
 /* LOADING */
 export const LOADING = "LOADING";
 export const COMPLETED = "COMPLETED";
+
+/*ENDPOINTS*/
+export const SET_ENDPOINTS = "SET_ENDPOINTS";
