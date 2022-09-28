@@ -1,10 +1,9 @@
-import * as APP_ROUTES from "utils/routeConstants";
 import * as CONSTANTS from "../assets/constants/authConstants";
 import * as TYPES from "./types";
 
 import API from "../utils/axiosInstance";
 import Cookies from "js-cookie";
-import { constructToast } from "actions/toastActions";
+import { showToast } from "actions/toastActions";
 import { uid } from "../utils/helper";
 
 export const makeLoginRequest =
@@ -46,7 +45,7 @@ export const makeLoginRequest =
 
         navigate(APP_ROUTES.OVERVIEW);
 
-        dispatch(constructToast("success", "Logged in successfully!"));
+        dispatch(showToast("success", "Logged in successfully!"));
       }
       dispatch({ type: TYPES.COMPLETED });
     } catch (error) {
@@ -104,10 +103,8 @@ export const registerUser =
         ...details,
       });
       if (response.status === 201) {
-        dispatch(
-          constructToast("success", "Account created!", "Login to continue")
-        );
-        navigate(APP_ROUTES.AUTH_LOGIN);
+        dispatch(showToast("success", "Account created!", "Login to continue"));
+        navigate("/login");
       }
       dispatch({ type: TYPES.COMPLETED });
     } catch (error) {

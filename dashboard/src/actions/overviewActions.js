@@ -12,8 +12,8 @@ import {
 } from "assets/constants/overviewConstants";
 
 import API from "../utils/axiosInstance";
-import { constructToast } from "./toastActions";
 import { findNoOfDays } from "utils/dateFunctions";
+import { showToast } from "./toastActions";
 
 export const getDatasets = () => async (dispatch, getState) => {
   try {
@@ -49,7 +49,7 @@ export const getDatasets = () => async (dispatch, getState) => {
       }
     }
   } catch (error) {
-    dispatch(constructToast("danger", error?.response?.data?.message));
+    dispatch(showToast("danger", error?.response?.data?.message));
     dispatch({ type: TYPES.NETWORK_ERROR });
   }
   dispatch({ type: TYPES.COMPLETED });
@@ -125,10 +125,10 @@ export const updateDataset =
         });
         dispatch(initializeRuns());
       } else {
-        dispatch(constructToast("danger", response?.data?.message));
+        dispatch(showToast("danger", response?.data?.message));
       }
     } catch (error) {
-      dispatch(constructToast("danger", error?.response?.data?.message));
+      dispatch(showToast("danger", error?.response?.data?.message));
       dispatch({ type: TYPES.NETWORK_ERROR });
     }
     dispatch({ type: TYPES.COMPLETED });
@@ -154,10 +154,10 @@ export const deleteDataset = (dataset) => async (dispatch, getState) => {
       });
 
       dispatch(initializeRuns());
-      dispatch(constructToast("success", "Deleted!"));
+      dispatch(showToast("success", "Deleted!"));
     }
   } catch (error) {
-    dispatch(constructToast("danger", error?.response?.data?.message));
+    dispatch(showToast("danger", error?.response?.data?.message));
     dispatch({ type: TYPES.NETWORK_ERROR });
   }
   dispatch({ type: TYPES.COMPLETED });
@@ -193,10 +193,10 @@ export const updateMultipleDataset =
           : method === "save"
           ? "Saved!"
           : "Updated!";
-      dispatch(constructToast("success", toastMsg));
+      dispatch(showToast("success", toastMsg));
       dispatch(setSelectedRuns([]));
     } else {
-      dispatch(constructToast("warning", "Select dataset(s) for update"));
+      dispatch(showToast("warning", "Select dataset(s) for update"));
     }
   };
 
@@ -223,10 +223,10 @@ export const publishDataset =
           type: TYPES.SAVED_RUNS,
           payload: savedRuns,
         });
-        dispatch(constructToast("success", "Updated!"));
+        dispatch(showToast("success", "Updated!"));
       }
     } catch (error) {
-      dispatch(constructToast("danger", error?.response?.data?.message));
+      dispatch(showToast("danger", error?.response?.data?.message));
       dispatch({ type: TYPES.NETWORK_ERROR });
     }
     dispatch({ type: TYPES.COMPLETED });
