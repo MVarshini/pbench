@@ -12,6 +12,7 @@ import {
 } from "react-router-dom";
 import React, { useEffect } from "react";
 
+import AnalysisComponent from "modules/components/AnalysisComponent";
 import { AuthForm } from "modules/components/AuthComponent/common-components";
 import AuthLayout from "modules/containers/AuthLayout";
 import Cookies from "js-cookie";
@@ -67,6 +68,10 @@ const App = () => {
             </Route>
             <Route element={<MainLayout />}>
               <Route index element={<TableWithFavorite />} />
+              <Route
+                path={APP_ROUTES.ANALYSIS}
+                element={<AnalysisComponent />}
+              />
               <Route element={<ProtectedRoute />}>
                 <Route
                   path={APP_ROUTES.USER_PROFILE}
