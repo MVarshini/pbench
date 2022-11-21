@@ -15,7 +15,6 @@ import {
   DASHBOARD_SEEN,
   DATASET_ACCESS,
   DATASET_CREATED,
-  DATASET_OWNER,
   SERVER_DELETION,
   USER_FAVORITE,
 } from "assets/constants/overviewConstants";
@@ -27,12 +26,15 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 
 import React from "react";
+import { TOC } from "assets/constants/navigationConstants";
 import { formatDateTime } from "utils/dateFunctions";
+import { useNavigate } from "react-router";
 
 const SavedRunsComponent = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { savedRuns, selectedRuns } = useSelector((state) => state.overview);
-  const loginDetails = useSelector((state) => state.userAuth.loginDetails);
+  // const loginDetails = useSelector((state) => state.userAuth.loginDetails);
 
   /* Selecting */
   const areAllRunsSelected =
@@ -125,6 +127,7 @@ const SavedRunsComponent = () => {
                       }}
                     />
                     <Td
+                      onClick={() => navigate(`${TOC}/${item.resource_id}`)}
                       className="result_column"
                       dataLabel={columnNames.result}
                     >
@@ -149,10 +152,10 @@ const SavedRunsComponent = () => {
                       {rowActions ? (
                         <ActionsColumn
                           items={rowActions}
-                          isDisabled={
-                            item?.metadata[DATASET_OWNER] !==
-                            loginDetails?.username
-                          }
+                          // isDisabled={
+                          //   item?.metadata[DATASET_OWNER] !==
+                          //   loginDetails?.username
+                          // }
                         />
                       ) : null}
                     </Td>

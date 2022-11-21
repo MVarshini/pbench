@@ -1,8 +1,8 @@
-import React, { useState } from "react";
 import { Nav, NavItem, NavList } from "@patternfly/react-core";
+import React, { useState } from "react";
 
 const NavItems = () => {
-  const [activeItem, setActiveItem] = useState("grp-1_itm-1");
+  const [activeItem, setActiveItem] = useState("grp-1_itm-4");
   const onSelect = (result) => {
     setActiveItem(result.itemId);
   };
@@ -32,6 +32,14 @@ const NavItems = () => {
           isActive={activeItem === "grp-1_itm-3"}
         >
           Explore
+        </NavItem>
+        <NavItem
+          preventDefault
+          to="#grouped-3"
+          itemId="grp-1_itm-3"
+          isActive={activeItem === "grp-1_itm-4"}
+        >
+          Analysis
         </NavItem>
       </NavList>
     </Nav>
