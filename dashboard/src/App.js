@@ -21,6 +21,7 @@ import MainLayout from "modules/containers/MainLayout";
 import NoMatchingPage from "modules/components/EmptyPageComponent/NoMatchingPage";
 import OverviewComponent from "modules/components/OverviewComponent";
 import ProfileComponent from "modules/components/ProfileComponent";
+import QuisbySheetComponent from "modules/components/QuisbyComponent";
 import SignupForm from "modules/components/AuthComponent/SignupForm";
 import TableOfContent from "modules/components/TableOfContent";
 import TableWithFavorite from "modules/components/TableComponent";
@@ -91,8 +92,13 @@ const App = () => {
                   element={<ComingSoonPage />}
                 />
               </Route>
+              <Route
+                path={APP_ROUTES.QUISBY}
+                element={<QuisbySheetComponent />}
+              />
               <Route path={APP_ROUTES.SEARCH} element={<ComingSoonPage />} />
             </Route>
+
             <Route path="*" element={<NoMatchingPage />} />
           </Route>
         </Routes>
