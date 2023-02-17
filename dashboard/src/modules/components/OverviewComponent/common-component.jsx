@@ -17,6 +17,7 @@ import {
 import {
   CaretDownIcon,
   CheckIcon,
+  ExternalLinkSquareAltIcon,
   PencilAltIcon,
   RedoIcon,
   TimesIcon,
@@ -273,6 +274,9 @@ export const NewRunsRow = (props) => {
           saveRowData={props.saveRowData}
         />
       </Td>
+      <Td>
+        <QuisbyResultsBtn name={item.name} />
+      </Td>
       <Td isActionCell>
         {props.rowActions ? <ActionsColumn items={props.rowActions} /> : null}
       </Td>
@@ -330,5 +334,21 @@ export const SavedRunsRow = (props) => {
         {rowActions ? <ActionsColumn items={rowActions} /> : null}
       </Td>
     </>
+  );
+};
+
+export const QuisbyResultsBtn = (props) => {
+  const loadData = (newPageUrl) => {
+    window.open(newPageUrl, "_blank");
+  };
+  return (
+    <Button
+      variant="link"
+      icon={<ExternalLinkSquareAltIcon />}
+      iconPosition="right"
+      onClick={() => loadData(`/dashboard/quisby-results/${props.name}`)}
+    >
+      Quisby Results
+    </Button>
   );
 };
