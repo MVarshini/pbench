@@ -22,7 +22,8 @@ export const getDatasets = () => async (dispatch, getState) => {
     params.append("metadata", CONSTANTS.DASHBOARD_SAVED);
     params.append("metadata", CONSTANTS.DASHBOARD_SEEN);
     params.append("metadata", CONSTANTS.USER_FAVORITE);
-
+    params.append("metadata", "dataset");
+    params.append("metadata", "server");
     params.append("owner", username);
 
     const endpoints = getState().apiEndpoint.endpoints;
