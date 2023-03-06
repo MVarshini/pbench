@@ -9,6 +9,7 @@ const initialState = {
   selectedRuns: [],
   expiringRuns: [],
   loadingDone: !!sessionStorage.getItem("loadingDone"),
+  quisbyDoc: "",
 };
 
 const OverviewReducer = (state = initialState, action = {}) => {
@@ -53,6 +54,11 @@ const OverviewReducer = (state = initialState, action = {}) => {
       return {
         ...state,
         loadingDone: payload,
+      };
+    case TYPES.SET_QUISBY_DOC_LINK:
+      return {
+        ...state,
+        quisbyDoc: payload,
       };
     default:
       return state;

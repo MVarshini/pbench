@@ -326,3 +326,27 @@ export const setRowtoEdit =
     }
     dispatch(updateDatasetType(data, type));
   };
+export const getQuisbyResults =
+  (name, rid, navigate) => async (dispatch, getState) => {
+    try {
+      const params = [{ name, rid }];
+      const endpoints = getState().apiEndpoint.endpoints;
+      const newPageURL = `/dashboard/quisby-results/${name}`;
+      const response = await API.post(
+        "http://10.1.170.224:4000/quisby/get_metrics_data/",
+        {
+          resource_id: params,
+        }
+      );
+      if (response.status === 200) {
+        dispatch({
+          type: TYPES.SET_QUISBY_DOC_LINK,
+          payload: response.spreadsheetId,
+        });
+        navigate(newPageURL);
+      }
+    } catch (error) {
+      dispatch(showToast(DANGER, error?.response?.data?.message));
+      dispatch({ type: TYPES.NETWORK_ERROR });
+    }
+  };

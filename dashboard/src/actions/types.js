@@ -55,3 +55,6 @@ export const UPDATE_TOC_LOADING = "UPDATE_TOC_LOADING";
 
 /* SIDEBAR */
 export const SET_ACTIVE_MENU_ITEM = "SET_ACTIVE_MENU_ITEM";
+
+/* Quisby */
+export const SET_QUISBY_DOC_LINK = "SET_QUISBY_DOC_LINK";

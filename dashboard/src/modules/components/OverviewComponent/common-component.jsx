@@ -29,8 +29,13 @@ import {
   SERVER_DELETION,
 } from "assets/constants/overviewConstants";
 import React, { useState } from "react";
-import { getDatasets, updateMultipleDataset } from "actions/overviewActions";
+import {
+  getDatasets,
+  getQuisbyResults,
+  updateMultipleDataset,
+} from "actions/overviewActions";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useOutletContext } from "react-router-dom";
 
 import { formatDateTime } from "utils/dateFunctions";
 
@@ -275,7 +280,7 @@ export const NewRunsRow = (props) => {
         />
       </Td>
       <Td>
-        <QuisbyResultsBtn name={item.name} />
+        <QuisbyResultsBtn name={item.name} rId={item.resource_id} />
       </Td>
       <Td isActionCell>
         {props.rowActions ? <ActionsColumn items={props.rowActions} /> : null}
@@ -338,8 +343,11 @@ export const SavedRunsRow = (props) => {
 };
 
 export const QuisbyResultsBtn = (props) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const loadData = (newPageUrl) => {
-    window.open(newPageUrl, "_blank");
+    // window.open(newPageUrl, "_blank");
+    dispatch(getQuisbyResults(props.name, props.rId, navigate));
   };
   return (
     <Button
