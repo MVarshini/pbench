@@ -330,7 +330,6 @@ export const getQuisbyResults =
   (name, rid, navigate) => async (dispatch, getState) => {
     try {
       const params = [{ name, rid }];
-      const endpoints = getState().apiEndpoint.endpoints;
       const newPageURL = `/dashboard/quisby-results/${name}`;
       const response = await API.post(
         "http://10.1.170.224:4000/quisby/get_metrics_data/",
@@ -341,7 +340,7 @@ export const getQuisbyResults =
       if (response.status === 200) {
         dispatch({
           type: TYPES.SET_QUISBY_DOC_LINK,
-          payload: response.spreadsheetId,
+          payload: response.data.sheet_url,
         });
         navigate(newPageURL);
       }
