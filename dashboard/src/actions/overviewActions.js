@@ -329,8 +329,9 @@ export const setRowtoEdit =
 export const getQuisbyResults =
   (name, rid, navigate) => async (dispatch, getState) => {
     try {
+      dispatch({ type: TYPES.LOADING });
       const params = [{ name, rid }];
-      const newPageURL = `/dashboard/quisby-results/${name}`;
+      const newPageURL = `/dashboard/quisby-results/${name}/${rid}`;
       const response = await API.post(
         "http://10.1.170.224:4000/quisby/get_metrics_data/",
         {
@@ -342,8 +343,11 @@ export const getQuisbyResults =
           type: TYPES.SET_QUISBY_DOC_LINK,
           payload: response.data.sheet_url,
         });
-        navigate(newPageURL);
+        if (navigate) {
+          navigate(newPageURL);
+        }
       }
+      dispatch({ type: TYPES.COMPLETED });
     } catch (error) {
       dispatch(showToast(DANGER, error?.response?.data?.message));
       dispatch({ type: TYPES.NETWORK_ERROR });
